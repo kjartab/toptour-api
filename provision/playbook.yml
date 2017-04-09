@@ -1,0 +1,20 @@
+--- 
+- name: toptour api
+  hosts: "{{ hosts_input | default('default') }}"
+  become: yes
+  # deploy_dir: /opt/toptour-api
+  vars:
+    nodejs_version: 7.x
+    nodejs_install_npm_user: vagrant
+
+  tasks:
+    - local_action: shell cd {{playbook_dir}} && npm install --no-bin-links
+      become_user: "{{ansible_user}}"
+    
+
+    # - local_action: rollup 
+  # roles:
+  #   - geerlingguy.nodejs
+  #   - angstwad.docker_ubuntu
+  # tasks:
+  #   - copy: src=../{{playbook_dir}}/package.json dest=/opt/toptour-api

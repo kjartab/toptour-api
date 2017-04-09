@@ -1,0 +1,10 @@
+---
+- name: toptour
+  hosts: "{{ hosts_input | default('default') }}"
+  become: yes
+
+  tasks:
+    - shell: ansible-galaxy install {{item}}
+      with_items:
+        - angstwad.docker_ubuntu
+      
