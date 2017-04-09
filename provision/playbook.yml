@@ -10,7 +10,7 @@
   tasks:
     - local_action: shell cd {{playbook_dir}} && npm install --no-bin-links
       become_user: "{{ansible_user}}"
-    
+    - local_action: shell rollup {{playbook_dir}}
 
     # - local_action: rollup 
   # roles:
