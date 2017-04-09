@@ -1,4 +1,4 @@
-import './env.js';
+require('./env.js');
 
 // import { default as express } from 'express';
 // import 'elasticsearch';
@@ -106,7 +106,7 @@ app.get('/:index/:type/:id', function(req, res) {
     .catch(function() {
         res.sendStatus(500);
     });
-
+    
 });
 
 // console.log('Running on localhost:' + process.env.NODE_PORT);
