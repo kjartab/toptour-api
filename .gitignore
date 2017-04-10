@@ -5,3 +5,4 @@ env
 build.js
 build/
 envs.sh
+**/ansible-role*/

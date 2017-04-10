@@ -1,0 +1,31 @@
+server {
+
+    location ~ /.well-known {
+            allow all;
+    }
+
+    location ~ \ {
+        proxy_pass http://127.0.0.1:5042;
+    }
+
+    index index.html;
+
+    root /var/www/{{letsencrypt_domain_name}}/test;
+
+    listen 443 ssl;
+
+    server_name {{letsencrypt_domain_name}};
+
+    include /etc/nginx/snippets/ssl-{{letsencrypt_domain_name}}.conf;
+    include /etc/nginx/snippets/ssl-params.conf;
+    
+    include /etc/nginx/conf.d/{{letsencrypt_domain_name}}/*.conf;    
+}
+
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name {{letsencrypt_domain_name}};
+    return 301 https://$host$request_uri;
+}
