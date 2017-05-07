@@ -2,7 +2,7 @@ sudo: required
 dist: trusty
 addons:
   ssh_known_hosts: api.trd.toptour.no
-  
+
 language: node_js
 node_js:
 - '7'
@@ -19,6 +19,6 @@ before_deploy:
 deploy:
   provider: script
   skip_cleanup: true
-  script: rsync -rav --no-perms --delete-after --quiet $TRAVIS_BUILD_DIR travis@api.trd.toptour.no:/home/travis/api.trd.toptour.no
+  script: rsync -rav -o StrictHostKeyChecking=no --no-perms --delete-after --quiet $TRAVIS_BUILD_DIR travis@api.trd.toptour.no:/home/travis/api.trd.toptour.no
   on:
     branch: master
