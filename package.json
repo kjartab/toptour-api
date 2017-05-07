@@ -22,8 +22,7 @@
     "rollup-plugin-replace": "^1.1.1"
   },
   "scripts": {
-    "start": "node src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/index.js"
   },
   "author": "",
   "license": "ISC"
