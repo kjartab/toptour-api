@@ -12,7 +12,6 @@ var app = express();
 var cors = require('cors');
 var bodyParser = require('body-parser');
 
-
 var app = express();
 
 var client = new elasticsearch.Client( {  
@@ -29,8 +28,6 @@ app.get('/', function(req, res) {
     res.send({ 'message': 'Welcome to Toptour API' });
 });
 
-
-
 function search(index, type, query) {
 
     return new Promise((resolve, reject) => {
@@ -39,11 +36,11 @@ function search(index, type, query) {
             index: index,
             body: {}
         }
-
+        
         if (query) {
             data.body = query;
         }
-
+        
         client.search(data).then(function (resp) {
             resolve(resp);        
         }, function (err) {
@@ -109,5 +106,5 @@ app.get('/:index/:type/:id', function(req, res) {
     
 });
 
-// console.log('Running on localhost:' + process.env.NODE_PORT);
+
 app.listen(process.env.NODE_PORT);

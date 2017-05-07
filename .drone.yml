@@ -1,0 +1,11 @@
+image: http://my-docker-registry/my-docker-image:version  
+script:  
+  - ./.drone/build.sh
+deploy:  
+  bash:
+    script:
+      - ./drone/deploy.sh
+notify:  
+  email:
+    recipients:
+      - kjartanbjorset@gmail.com

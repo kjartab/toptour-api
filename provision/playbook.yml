@@ -1,20 +1,24 @@
 --- 
 - name: toptour api
-  hosts: "{{ hosts_input | default('default') }}"
+  hosts: trd
   become: yes
 
   vars:
-    letsencrypt_email: kjartanbjorset@gmail.com
-    letsencrypt_domain_name: api.trd.toptour.no
+    nginx_app_config_template: "api.trd.toptour.no.j2"
+    nginx_app_domain_name: "api.trd.toptour.no"
+    nginx_app_webroot: /var/www/{{nginx_app_domain_name}}
+    letsencrypt_email: kjartanbjorset@gmail.com 
     
-    nginx_web_root: /var/www
-    nginx_config_name: toptourapiconfig.j2
+    travis_ci_user: travis
+    travis_ci_web_group: web
+    travis_ci_pub_deploy_key: "/home/kjartan/.ssh/deploy_rsa.pub"
+
+  pre_tasks: 
+    - apt: update_cache=yes
 
   roles:
-    - role: kjartab.nginx
-    - role: kjartab.nginx-letsencrypt
-  
-
+    - role: kjartab.nginx-certbot-app
+    - role: ansible-role-travis-ci-app
 
   # tasks:
     # - local_action: shell cd {{playbook_dir}} && npm install --no-bin-links
