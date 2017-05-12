@@ -1,11 +1,4 @@
-require('./env.js');
 
-// import { default as express } from 'express';
-// import 'elasticsearch';
-// import 'cors';
-// import 'body-parser'
-
-// import { default as express } from 'express';
 var express = require('express');
 var elasticsearch = require('elasticsearch');
 var app = express();
@@ -19,6 +12,8 @@ var client = new elasticsearch.Client( {
         process.env.ES_SERVER
     ]
 });
+
+console.log(process.env.NODE_PORT)
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false })); 

@@ -1,4 +1,11 @@
+### Deploying 
 
+variables:
+- NODE_PORT
+- ES_SERVER
+
+
+ssh-keygen -t rsa -b 4096 -C 'kjartanbjorset@gmail.com', -f /
 
 ssh-keygen -t rsa -b 4096 -C 'build@travis-ci.org' -f ./deploy_rsa
 travis encrypt-file deploy_rsa --add
