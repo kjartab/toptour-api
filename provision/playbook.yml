@@ -11,7 +11,7 @@
     
     travis_ci_user: travis
     travis_ci_web_group: web
-    travis_ci_pub_deploy_key: "/home/kjartan/.ssh/deploy_rsa.pub"
+    travis_ci_pub_deploy_key: "/home/kjartan/.ssh/id_rsa_travis.pub"
 
   pre_tasks: 
     - apt: update_cache=yes

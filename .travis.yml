@@ -9,29 +9,27 @@ language: node_js
 node_js:
 - '7'
 install: true
-
 before_deploy:
 - openssl aes-256-cbc -K $encrypted_9d805cca1e1c_key -iv $encrypted_9d805cca1e1c_iv
   -in id_rsa_travis.enc -out /tmp/id_rsa_travis -d
 - eval "$(ssh-agent -s)"
 - chmod 600 /tmp/id_rsa_travis
 - ssh-add /tmp/id_rsa_travis
-
 deploy:
   provider: script
   skip_cleanup: true
   script: rsync -rav --no-perms --delete-after --quiet $TRAVIS_BUILD_DIR travis@api.trd.toptour.no:/home/travis/
   on:
     branch: master
-
 after_success:
 - if [ "$TRAVIS_BRANCH" == "master" ]; then docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
   docker push USER/REPO; fi
-
 services:
 - docker
-
 env:
   global:
   - secure: k6FxUxwrDgMjInMNrWLR2uU8Zu+QWmQ0rr42OA0/bApFsY1AeGTzeb60eHl/vsCa5DNiekKUhN+ro/J8tkNRx2FpqRaBy1/b2fZRUKHWc5PoaLezIRqjHugKShvrwQjEAOCtve40Wk9+ZFHdfwZQZ6P63uG4Q/zxtlmzEaq+KbVDj0Aorf6HQQYL5+GdH9fDSPnno8x6NNAk2nyr0qsWq/mxrygl7v5y+0sRk8hkNRI6XvUvTgiNAtACpP2Jnyr12FFfHrWGMp6RW0xzF5Lt4r7WSmBkfuKUp4955qsGl97OIVwNDxPF9GVrAM0HHjoFYfdM9aBGttehcwRWoEI0fFdfqbPzTI79e6wamrHwT5ySYcaWcI0wdm772BYCecNCWkHTi/o/4sAvvUWLIHHFDkxUdBv2x+X7SHkbvND2d5tLj9pbeLY+OtJI3HmQdlKiuMD0kz4sKuTWloDKy0QDlgu8l9fB7VkCouBYyMBqWb+K3aW61wG1/AkwI8OmHQhv/jN3cu06Pa7wavWW+k/qZcC2n/se0ygA8gK3YLWBBzulVPnj7lEqtj1r39NRpuAn9kuHxAybv/xCIVvWscBoJDJWT/PRPXuW7h6fL9y7tjl8YZxvOJggA9UBBe5NqsdYTNEs3w8BEp134tOjjGHIUWY3VE0B5eD5A7D5wkiAOT4=
   - secure: yhjncrfWFJHNOjsrnL4P0i2YiEbF0LA+n74Voc9P/ANYZMqbJv/AIzV0R5B4WdRb4VtuMujfKufH/Fj8P1meKJj99/kG0pXzpujM5oHrVa7ylKsC2ct+rlcnPmWBiViTJ5WQFMlWvYb9BgJ1q/tt7rWDrieDzlOyZnzobUXjbTivP3Eejgr9sqqkfblBYSVHN4NE/4Sovs04XErfGlYRTLe6qaz5zmfUCQ9HeAPEsl4nl7+Ux/R6JiT0qkM6LcWoZ1IVQQKCgDhiUCSIPK1gUpj3bJ9qsbEE/CZ1C5do6ZNnKxwOcmAfHUli9aFQZ5DXQihmU7iie6doGQeI3UyDGCsfkRd29SJ9RZz6EWTtz1pVKdnyIMI60HeS9gO3PrN/k+NRAPsnmcBvt/OHsHs87v7/EsbjV/CEh4Eas6zX2kPt6YWgRNFrAIPQpF4YfPvQ4y+ETmc8JOduBxbejtJjsj2tfLjhvUzQs9X56hZKzeEwqeh9PhY35jNFXq8NFGsEBBDPvjEb/i6Ery9e3DaC5HXl187dtmjz+uVJqUwQvy5KfGkAGSZLVY7jXX1sxzDTWNFk472BtzYsKHWtSr58p00JnQ7/XVK4zLI2Vsr7Uo5TgWas0+2t0j3dI5P+cR2+0eL7I5lClju7A/ANFNkKKkf/vAAzcespRx8mCoGoims=
+before_install:
+- openssl aes-256-cbc -K $encrypted_9d805cca1e1c_key -iv $encrypted_9d805cca1e1c_iv
+  -in id_rsa_travis.enc -out ~\/.ssh/id_rsa_travis -d
