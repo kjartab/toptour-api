@@ -8,6 +8,10 @@ variables:
 ssh-keygen -t rsa -b 4096 -C 'kjartanbjorset@gmail.com', -f /
 
 ssh-keygen -t rsa -b 4096 -C 'build@travis-ci.org' -f ./deploy_rsa
+
+
+encrypt 
+
 travis encrypt-file deploy_rsa --add
 ssh-copy-id -i deploy_rsa.pub <ssh-user>@<deploy-host>
 rm -f deploy_rsa deploy_rsa.pub
