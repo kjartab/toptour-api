@@ -22,6 +22,7 @@ deploy:
   on:
     branch: master
 after_success:
+- docker build -t "toptour/api" ./
 - if [ "$TRAVIS_BRANCH" == "master" ]; then docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
   docker push "toptour/api"; fi
 env:
