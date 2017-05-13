@@ -23,7 +23,7 @@ deploy:
     branch: master
 after_success:
 - if [ "$TRAVIS_BRANCH" == "master" ]; then docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
-  docker push USER/REPO; fi
+  docker push "toptour/api"; fi
 env:
   global:
   - secure: k6FxUxwrDgMjInMNrWLR2uU8Zu+QWmQ0rr42OA0/bApFsY1AeGTzeb60eHl/vsCa5DNiekKUhN+ro/J8tkNRx2FpqRaBy1/b2fZRUKHWc5PoaLezIRqjHugKShvrwQjEAOCtve40Wk9+ZFHdfwZQZ6P63uG4Q/zxtlmzEaq+KbVDj0Aorf6HQQYL5+GdH9fDSPnno8x6NNAk2nyr0qsWq/mxrygl7v5y+0sRk8hkNRI6XvUvTgiNAtACpP2Jnyr12FFfHrWGMp6RW0xzF5Lt4r7WSmBkfuKUp4955qsGl97OIVwNDxPF9GVrAM0HHjoFYfdM9aBGttehcwRWoEI0fFdfqbPzTI79e6wamrHwT5ySYcaWcI0wdm772BYCecNCWkHTi/o/4sAvvUWLIHHFDkxUdBv2x+X7SHkbvND2d5tLj9pbeLY+OtJI3HmQdlKiuMD0kz4sKuTWloDKy0QDlgu8l9fB7VkCouBYyMBqWb+K3aW61wG1/AkwI8OmHQhv/jN3cu06Pa7wavWW+k/qZcC2n/se0ygA8gK3YLWBBzulVPnj7lEqtj1r39NRpuAn9kuHxAybv/xCIVvWscBoJDJWT/PRPXuW7h6fL9y7tjl8YZxvOJggA9UBBe5NqsdYTNEs3w8BEp134tOjjGHIUWY3VE0B5eD5A7D5wkiAOT4=
