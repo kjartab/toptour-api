@@ -1,105 +1,30 @@
+var express = require('express')
 
-var express = require('express');
-var elasticsearch = require('elasticsearch');
-var app = express();
-var cors = require('cors');
-var bodyParser = require('body-parser');
+var app = express()
 
-var app = express();
+app.use(require('body-parser').urlencoded({ extended: true }));
+app.use(require('cookie-parser')());
+app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
 
-var client = new elasticsearch.Client( {  
-    hosts: [
-        process.env.ES_SERVER
-    ]
-});
+var userRouter = require('./routers/user');
+var searchRouter = require('./routers/search');
+var analysisRouter = require('./routers/analysis');
 
-console.log(process.env.NODE_PORT)
-
-app.use(cors());
-app.use(bodyParser.urlencoded({ extended: false })); 
-app.use(bodyParser.json());
+// Setup authentication 
+var auth = require('./routers/auth'); 
+var passport = auth.passport;
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.get('/', function(req, res) {
-    res.send({ 'message': 'Welcome to Toptour API' });
-});
+    res.send({ 'message': 'Welcome to Toptour API' })
+})
 
-function search(index, type, query) {
+app.use('/search', searchRouter)
+app.use('/auth', auth.router)
 
-    return new Promise((resolve, reject) => {
+app.use(auth.isAuthenticated)
+app.use('/users', userRouter)
+app.use('/analysis', analysisRouter)
 
-        var data = {
-            index: index,
-            body: {}
-        }
-        
-        if (query) {
-            data.body = query;
-        }
-        
-        client.search(data).then(function (resp) {
-            resolve(resp);        
-        }, function (err) {
-            reject(err);
-        });
-    });
-}
-
-
-/**
- * Handles index/type/_search type queries for elasticsearch
- */
-app.post('/:index/:type/_search', function (req, res) {
-
-    var type = req.params.type;
-    var index = req.params.index;
-    var query = req.body;
-
-    search(index, type, query)
-    .then(function(resp) {
-      res.send(resp);
-    })
-    .catch(function() {
-      res.sendStatus(500);
-    });
-
-});
-
-/**
- * Handles index/_search type queries for elasticsearch
- */
-app.post('/:index/_search', function(req, res) {
-
-    var type = req.params.type;
-    var index = req.params.index;
-
-    search(index, type, req.body)
-    .then(function(resp) {
-        res.send(resp);
-    })
-    .catch(function() {
-        res.sendStatus(500);
-    });
-
-});
-
-/**
- * Handles index/_search type queries for elasticsearch
- */
-app.get('/:index/:type/:id', function(req, res) {
-
-    var type = req.params.type;
-    var index = req.params.index;
-    var query = req.body;
-
-    search(index, type, query)
-    .then(function(resp) {
-        res.send(resp);
-    })
-    .catch(function() {
-        res.sendStatus(500);
-    });
-    
-});
-
-
-app.listen(process.env.NODE_PORT);
+app.listen(process.env.NODE_PORT || 3000)
