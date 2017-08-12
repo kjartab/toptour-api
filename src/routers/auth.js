@@ -62,7 +62,8 @@ router.get('/', (req, res) => {
 });
 
 router.get('/login', (req, res) => {
-    res.send("<a href='/auth/google'>Login google</a>");
+  console.log(baseUrl);
+    res.send("<a href='" + baseUrl + "/auth/google'>Login google</a>");
 })
 
 router.get('/logout', (req, res) => {
@@ -82,7 +83,7 @@ router.get('/google/callback',
 
 router.get('/google/logout', (req, res) => {
     req.logout();
-    res.redirect('/');
+    res.redirect(baseUrl + '/');
 });
 
 router.get('*', (req, res) => {
