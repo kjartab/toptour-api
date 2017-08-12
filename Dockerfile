@@ -1,7 +1,5 @@
 FROM node:7.7
 
-ENV ES_SERVER="http://elastic:changeme@10.0.0.125:9200"
-ENV NODE_PORT=3000
 
 # Create app directory
 WORKDIR /usr/src/app
