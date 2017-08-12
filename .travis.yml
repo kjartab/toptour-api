@@ -23,12 +23,15 @@ before_deploy:
 - ssh-add /tmp/id_rsa_travis
 
 deploy:
-  provider: script
-  skip_cleanup: true
-  script: rsync -rav --no-perms --delete-after --quiet $TRAVIS_BUILD_DIR travis@api.trd.toptour.no:/home/travis/
-  on:
-    branch: master
-
+  - provider: script
+    skip_cleanup: true
+    script: rsync -rav --no-perms --delete-after --quiet $TRAVIS_BUILD_DIR/ --include=docker-compose* --include=deploy.sh travis@api.trd.toptour.no:/home/travis/toptour/
+    on:
+      branch: master
+  - provider: script
+    script: ssh travis@api.trd.trondheim.no cd /home/travis/toptour && ./deploy.sh
+    on:
+      branch: master
 
 env:
   global:

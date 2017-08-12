@@ -39,6 +39,12 @@
         line: 'export ELASTIC_PASSWORD={{elastic_password}}'
         
     - file:
+        path: /home/{{toptour_deploy_user}}/toptour
+        state: directory
+        recurse: yes
+        owner: "{{toptour_deploy_user}}"
+
+    - file:
         path: /usr/share/elasticsearch/data
         state: directory
         recurse: yes

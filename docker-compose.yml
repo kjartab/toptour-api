@@ -18,6 +18,8 @@ services:
       - ES_SERVER=elasticsearch
       - ELASTIC_USER=$ELASTIC_USER
       - ELASTIC_PASSWORD=$ELASTIC_PASSWORD
+    depends_on:
+      - elasticsearch
 
 networks:
   esnet:
