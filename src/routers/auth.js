@@ -3,7 +3,7 @@ var passport = require('passport')
 var GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
 var router = express.Router()
 
-var baseUrl = process.env.API_BASE_URL || "http://localhost:3010";
+var baseUrl = "https://" + process.env.API_BASE_NAME || "http://localhost:3010";
 var loginUrl = baseUrl + '/auth/login';
 
 var db = require('../storage/db')
@@ -36,6 +36,7 @@ passport.deserializeUser(function(user, done) {
   done(null, user);
 });
 
+console.log("callbackurl", baseUrl + "/auth/google/callback")
 passport.use(new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,

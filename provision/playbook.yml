@@ -39,9 +39,9 @@
         line: 'export ELASTIC_PASSWORD={{elastic_password}}'
 
     - lineinfile:
-        regexp: 'export API_BASE_URL='
+        regexp: 'export API_BASE_NAME='
         path: /home/{{toptour_deploy_user}}/.bashrc
-        line: 'export API_BASE_URL={{nginx_app_domain_name}}'
+        line: 'export API_BASE_NAME={{nginx_app_domain_name}}'
         
         
     - file:

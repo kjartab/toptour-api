@@ -18,7 +18,7 @@ services:
       - ES_SERVER=elasticsearch
       - ELASTIC_USER=$ELASTIC_USER
       - ELASTIC_PASSWORD=$ELASTIC_PASSWORD
-      - API_BASE_URL=$API_BASE_URL
+      - API_BASE_NAME=$API_BASE_NAME
     depends_on:
       - elasticsearch
 
