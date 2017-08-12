@@ -54,6 +54,11 @@ passport.use(new GoogleStrategy({
   }
 ));
 
+router.get('/', (req, res) => {
+
+  console.log(process.env)
+  res.send("auth");
+});
 
 router.get('/login', (req, res) => {
     res.send("<a href='/auth/google'>Login google</a>");
