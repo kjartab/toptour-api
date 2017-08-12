@@ -37,6 +37,12 @@
         regexp: 'export ELASTIC_PASSWORD='
         path: /home/{{toptour_deploy_user}}/.bashrc
         line: 'export ELASTIC_PASSWORD={{elastic_password}}'
+
+    - lineinfile:
+        regexp: 'export API_BASE_URL='
+        path: /home/{{toptour_deploy_user}}/.bashrc
+        line: 'export API_BASE_URL={{nginx_app_domain_name}}'
+        
         
     - file:
         path: /home/{{toptour_deploy_user}}/toptour
@@ -49,6 +55,13 @@
         state: directory
         recurse: yes
         owner: "{{toptour_deploy_user}}"
+
+
+    - lineinfile: 
+        path: /etc/sysctl.conf
+        line:  vm.max_map_count=262144
+
+    - command: sysctl --system
   
   roles:
     - role: kjartab.nginx-certbot-app
