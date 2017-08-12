@@ -3,7 +3,12 @@ var passport = require('passport')
 var GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
 var router = express.Router()
 
-var baseUrl = "https://" + process.env.API_BASE_NAME || "http://localhost:3010";
+if (process.env.API_BASE_NAME) {
+  baseUrl = "https://" + process.env.API_BASE_NAME
+} else {
+  baseUrl = "http://localhost:3010";
+}
+
 var loginUrl = baseUrl + '/auth/login';
 
 var db = require('../storage/db')
