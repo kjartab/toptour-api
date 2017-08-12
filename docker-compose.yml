@@ -1,0 +1,15 @@
+version: "3"
+services:
+
+  api: 
+    build: .
+    ports:
+      - "5042:3000"
+    deploy:
+      restart_policy:
+        condition: always
+
+    environment:
+      - GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID
+      - GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET
+      - ES_SERVER=$ES_SERVER

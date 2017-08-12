@@ -1,18 +1,14 @@
 var express = require('express')
 var router = express.Router()
 var db = require('../storage/db')
+var tourRouter;
 
 router.get('/me', function (req, res) {
-    if (req.user) {
-      return res.send(req.user);
-    }
-    console.log("sending 401")
-
-    return res.sendStatus(401);
-    
+    return res.send(req.user);    
 })
 
-router.get('/:id', function (req, res) {
+router.get('/{id}', function (req, res) {
+
 
     if (req.user) {
 
@@ -20,12 +16,17 @@ router.get('/:id', function (req, res) {
 
     db.getUser()
     res.send(req.user)
-
 })
 
+
+// router.use('/{id}/tours', tourRouter);
+
+// router.use('/{id}/alerts', tourRouter);
 
 router.get('*', (req, res) => {
     res.sendStatus(404);
 })
+
+
 
 module.exports = router;

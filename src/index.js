@@ -11,7 +11,7 @@ var searchRouter = require('./routers/search');
 var analysisRouter = require('./routers/analysis');
 
 // Setup authentication 
-var auth = require('./routers/auth'); 
+var auth = require('./routers/auth');
 var passport = auth.passport;
 app.use(passport.initialize());
 app.use(passport.session());
@@ -25,6 +25,6 @@ app.use('/auth', auth.router)
 
 app.use(auth.isAuthenticated)
 app.use('/users', userRouter)
-app.use('/analysis', analysisRouter)
+// app.use('/analysis', analysisRouter)
 
 app.listen(process.env.NODE_PORT || 3000)

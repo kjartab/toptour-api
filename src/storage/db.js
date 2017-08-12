@@ -1,6 +1,10 @@
 
 class ToptourDatabase {
 
+    generateId() {
+        
+    }
+
     async createUserBySocialData(userData) {
 
     }

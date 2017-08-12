@@ -9,16 +9,35 @@
     nginx_app_webroot: /var/www/{{nginx_app_domain_name}}
     letsencrypt_email: kjartanbjorset@gmail.com 
     
-    travis_ci_user: travis
+    toptour_deploy_user: travis
+    travis_ci_user: "{{toptour_deploy_user}}"
     travis_ci_web_group: web
     travis_ci_pub_deploy_key: "/home/kjartan/.ssh/id_rsa_travis.pub"
 
+
   pre_tasks: 
     - apt: update_cache=yes
+    - lineinfile:
+        regexp: 'GOOGLE_CLIENT_ID='
+        path: /home/{{toptour_deploy_user}}/.bashrc
+        line: 'GOOGLE_CLIENT_ID={{GOOGLE_CLIENT_ID}}'
+    - lineinfile:
+        regexp: 'GOOGLE_CLIENT_SECRET='
+        path: /home/{{toptour_deploy_user}}/.bashrc
+        line: 'GOOGLE_CLIENT_SECRET={{GOOGLE_CLIENT_SECRET}}' 
+    - lineinfile:
+        regexp: 'ES_SERVER='
+        path: /home/{{toptour_deploy_user}}/.bashrc
+        line: 'ES_SERVER={{ES_SERVER}}'
+    # - lineinfile:
+    #     regexp: 'NODE_PORT='
+    #     path: /home/{{toptour_deploy_user}}/.bashrc
+    #     line: 'NODE_PORT={{NODE_PORT}}'
 
-  roles:
-    - role: kjartab.nginx-certbot-app
-    - role: ansible-role-travis-ci-app
+  
+  # roles:
+  #   - role: kjartab.nginx-certbot-app
+  #   - role: ansible-role-travis-ci-app
 
   # tasks:
     # - local_action: shell cd {{playbook_dir}} && npm install --no-bin-links

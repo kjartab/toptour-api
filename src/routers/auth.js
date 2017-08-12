@@ -3,6 +3,9 @@ var passport = require('passport')
 var GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
 var router = express.Router()
 
+var baseUrl = process.env.API_BASE_URL || "http://localhost:3010";
+var loginUrl = baseUrl + '/auth/login';
+
 var db = require('../storage/db')
 
 console.log("process env", process.env);
@@ -36,7 +39,7 @@ passport.deserializeUser(function(user, done) {
 passport.use(new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:3010/auth/google/callback",
+    callbackURL: baseUrl + "/auth/google/callback",
     passReqToCallback   : true
   },
   function(request, accessToken, refreshToken, profile, done) {
@@ -64,7 +67,7 @@ router.get('/google',
   passport.authenticate('google', { scope: ['profile'] }));
 
 router.get('/google/callback', 
-  passport.authenticate('google', { failureRedirect: '/login' }),
+  passport.authenticate('google', { failureRedirect: '/auth/login' }),
   function(req, res) {
     
     // Successful authentication, redirect home.
@@ -82,7 +85,8 @@ router.get('*', (req, res) => {
 
 function isAuthenticated(req, res, next) { 
     if (!req.user) {
-        res.redirect('/auth/login');
+        res.send(401, { 'url' : baseUrl + '/auth/login'})
+        // res.redirect('/auth/login');
     } else {
         // console.log(req.user.isAuthenticated(), "is auth");
         next();

@@ -3,12 +3,12 @@ var elasticsearch = require('elasticsearch')
 
 var router = express.Router()
 
-var url = process.env.ES_SERVER || "http://elastic:changeme@10.0.0.125:9200";
+var url = process.env.ES_SERVER;
 
 var client = new elasticsearch.Client( {  
     hosts: [
         url
-    ]
+    ]   
 });
 
 
