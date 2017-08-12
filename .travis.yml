@@ -31,11 +31,7 @@ deploy:
       branch: master
 
   - provider: script
-    script: ssh travis@api.trd.toptour.no << EOF
-          source .bashrc;
-          chmod +x deploy.sh;
-          ./deploy.sh
-        EOF
+    script: ssh travis@api.trd.toptour.no ls
     on:
       branch: master
 
