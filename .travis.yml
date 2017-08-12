@@ -31,7 +31,7 @@ deploy:
       branch: master
 
   - provider: script
-    script: ssh travis@api.trd.toptour.no source .bashrc && printenv && chmod +x deploy.sh && ./deploy.sh
+    script: ssh travis@api.trd.toptour.no source .bashrc && echo $0 && chmod +x deploy.sh && ./deploy.sh
     on:
       branch: master
 
