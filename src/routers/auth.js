@@ -35,12 +35,13 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(user, done) {
   done(null, user);
 });
+var callbackUrl = baseUrl + "/auth/google/callback";
 
-console.log("callbackurl", baseUrl + "/auth/google/callback")
+
 passport.use(new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
-    callbackURL: baseUrl + "/auth/google/callback",
+    callbackURL: callbackUrl,
     passReqToCallback   : true
   },
   function(request, accessToken, refreshToken, profile, done) {
