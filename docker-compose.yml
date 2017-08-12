@@ -9,7 +9,15 @@ services:
       restart_policy:
         condition: always
 
+    networks:
+      - esnet
+
     environment:
       - GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID
       - GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET
-      - ES_SERVER=$ES_SERVER
+      - ES_SERVER=elasticsearch
+      - ELASTIC_USER=$ELASTIC_USER
+      - ELASTIC_PASSWORD=$ELASTIC_PASSWORD
+
+networks:
+  esnet:

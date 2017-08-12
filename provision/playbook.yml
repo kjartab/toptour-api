@@ -13,23 +13,36 @@
     travis_ci_user: "{{toptour_deploy_user}}"
     travis_ci_web_group: web
     travis_ci_pub_deploy_key: "/home/kjartan/.ssh/id_rsa_travis.pub"
-    test2: vasss2
 
-  pre_tasks:   
+  pre_tasks:
 
     - apt: update_cache=yes
+
     - lineinfile:
         regexp: 'export GOOGLE_CLIENT_ID='
         path: /home/{{toptour_deploy_user}}/.bashrc
         line: 'export GOOGLE_CLIENT_ID={{google_client_id}}'
+
     - lineinfile:
         regexp: 'export GOOGLE_CLIENT_SECRET='
         path: /home/{{toptour_deploy_user}}/.bashrc
-        line: 'export GOOGLE_CLIENT_SECRET={{google_client_secret}}' 
+        line: 'export GOOGLE_CLIENT_SECRET={{google_client_secret}}'
+
     - lineinfile:
-        regexp: 'export ES_SERVER='
+        regexp: 'export ELASTIC_USER='
         path: /home/{{toptour_deploy_user}}/.bashrc
-        line: 'export ES_SERVER={{es_server}}'
+        line: 'export ELASTIC_USER={{elastic_user}}'
+
+    - lineinfile:
+        regexp: 'export ELASTIC_PASSWORD='
+        path: /home/{{toptour_deploy_user}}/.bashrc
+        line: 'export ELASTIC_PASSWORD={{elastic_password}}'
+        
+    - file:
+        path: /usr/share/elasticsearch/data
+        state: directory
+        recurse: yes
+        owner: "{{toptour_deploy_user}}"
   
   roles:
     - role: kjartab.nginx-certbot-app

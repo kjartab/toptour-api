@@ -1,7 +1,7 @@
 var express = require('express')
 
 var app = express()
-
+var version = process.env.TOPTOUR_API_VERSION;
 app.use(require('body-parser').urlencoded({ extended: true }));
 app.use(require('cookie-parser')());
 app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
@@ -18,6 +18,10 @@ app.use(passport.session());
 
 app.get('/', function(req, res) {
     res.send({ 'message': 'Welcome to Toptour API' })
+})
+
+app.get('/health', function(req, res) {
+    res.send("OK. Running version : " + version)
 })
 
 app.use('/search', searchRouter)

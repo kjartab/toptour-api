@@ -3,7 +3,7 @@ var elasticsearch = require('elasticsearch')
 
 var router = express.Router()
 
-var url = process.env.ES_SERVER;
+var url = "http://" + process.env.ELASTIC_USER + ":" + process.env.ELASTIC_PASSWORD + "@" + process.env.ES_SERVER + ":9200";
 
 var client = new elasticsearch.Client( {  
     hosts: [
@@ -13,7 +13,7 @@ var client = new elasticsearch.Client( {
 
 
 function search(index, type, query) {
-
+    console.log(url);
     return new Promise((resolve, reject) => {
 
         var data = {
