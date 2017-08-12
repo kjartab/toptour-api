@@ -11,9 +11,9 @@ node_js:
 install: true
 
 after_success:
-- docker build -t "toptour/api" ./
+- docker build -t "kjartanb/toptour-api" ./
 - if [ "$TRAVIS_BRANCH" == "master" ]; then docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
-  docker push "toptour/api"; fi
+  docker push "kjartanb/toptour-api"; fi
 
 before_deploy:
 - openssl aes-256-cbc -K $encrypted_9d805cca1e1c_key -iv $encrypted_9d805cca1e1c_iv
