@@ -69,7 +69,8 @@ router.get('/', (req, res) => {
 
 router.get('/login', (req, res) => {
   console.log(baseUrl);
-    res.send("<a href='" + baseUrl + "/auth/google'>Login google</a>");
+    res.redirect('/auth/google')
+    // res.send("<a href='" + baseUrl + "/auth/google'>Login google</a>");
 })
 
 router.get('/logout', (req, res) => {
@@ -79,10 +80,10 @@ router.get('/logout', (req, res) => {
 router.get('/google',
   passport.authenticate('google', { scope: ['profile'] }));
 
-router.get('/google/callback', 
+router.get('/google/callback',
   passport.authenticate('google', { failureRedirect: '/auth/login' }),
   function(req, res) {
-    
+
     // Successful authentication, redirect home.
     res.redirect('/');
   });
