@@ -13,6 +13,7 @@
     travis_ci_user: "{{toptour_deploy_user}}"
     travis_ci_web_group: web
     travis_ci_pub_deploy_key: "/home/kjartan/.ssh/id_rsa_travis.pub"
+    cookie_domain: "*.toptour.no"
 
   pre_tasks:
 
@@ -42,7 +43,11 @@
         regexp: 'export API_BASE_NAME='
         path: /home/{{toptour_deploy_user}}/.bashrc
         line: 'export API_BASE_NAME={{nginx_app_domain_name}}'
-        
+
+    - lineinfile:
+        regexp: 'export COOKIE_DOMAIN='
+        path: /home/{{toptour_deploy_user}}/.bashrc
+        line: 'export COOKIE_DOMAIN={{cookie_domain}}'
         
     - file:
         path: /home/{{toptour_deploy_user}}/toptour

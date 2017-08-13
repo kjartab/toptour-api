@@ -97,7 +97,7 @@ router.get('*', (req, res) => {
     res.sendStatus(404);
 });
 
-function isAuthenticated(req, res, next) { 
+function isAuthenticated(req, res, next) {
     if (!req.user) {
         res.send(401, { 'url' : baseUrl + '/auth/login'})
         // res.redirect('/auth/login');
