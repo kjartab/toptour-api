@@ -1,21 +1,6 @@
 version: "3"
 services:
   
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:5.5.1
-    environment:
-      - cluster.name=docker-cluster
-      # - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-    # deploy:
-    #   resources:
-    #     limit: 4g
-    volumes:
-      - esdata1:/usr/share/elasticsearch/data
-    ports:
-      - 9200:9200
-    networks:
-      - esnet
   db:
     image: mdillon/postgis
 
@@ -25,10 +10,8 @@ services:
       - dbnet
 
 
-volumes:
-  esdata1:
+volumes: 
   dbdata:
 
-networks:
-  esnet:
+networks: 
   dbnet:

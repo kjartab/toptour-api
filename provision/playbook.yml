@@ -1,15 +1,15 @@
 --- 
 - name: toptour api
-  hosts: trd
+  hosts: regn
   become: yes
 
   vars:
-    nginx_app_config_template: "api.trd.toptour.no.j2"
-    nginx_app_domain_name: "api.trd.toptour.no"
+    nginx_app_config_template: "api.toptour.no.j2"
+    nginx_app_domain_name: "api.toptour.no"
     nginx_app_webroot: /var/www/{{nginx_app_domain_name}}
     letsencrypt_email: kjartanbjorset@gmail.com 
     
-    toptour_deploy_user: travis
+    toptour_deploy_user: toptour
     travis_ci_user: "{{toptour_deploy_user}}"
     travis_ci_web_group: web
     travis_ci_pub_deploy_key: "/home/kjartan/.ssh/id_rsa_travis.pub"
@@ -18,6 +18,8 @@
   pre_tasks:
 
     - apt: update_cache=yes
+
+    - user: name={{toptour_deploy_user}} groups=docker,web
 
     - lineinfile:
         regexp: 'export GOOGLE_CLIENT_ID='
@@ -28,16 +30,6 @@
         regexp: 'export GOOGLE_CLIENT_SECRET='
         path: /home/{{toptour_deploy_user}}/.bashrc
         line: 'export GOOGLE_CLIENT_SECRET={{google_client_secret}}'
-
-    - lineinfile:
-        regexp: 'export ELASTIC_USER='
-        path: /home/{{toptour_deploy_user}}/.bashrc
-        line: 'export ELASTIC_USER={{elastic_user}}'
-
-    - lineinfile:
-        regexp: 'export ELASTIC_PASSWORD='
-        path: /home/{{toptour_deploy_user}}/.bashrc
-        line: 'export ELASTIC_PASSWORD={{elastic_password}}'
 
     - lineinfile:
         regexp: 'export API_BASE_NAME='
