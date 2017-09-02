@@ -12,7 +12,7 @@
     toptour_deploy_user: toptour
     travis_ci_user: "{{toptour_deploy_user}}"
     travis_ci_web_group: web
-    travis_ci_pub_deploy_key: "/home/kjartan/.ssh/id_rsa_travis.pub"
+    travis_ci_pub_deploy_key: "/home/kjartan/.ssh/id_rsa_travis.pub" 
     cookie_domain: "toptour.no"
 
   pre_tasks:
@@ -20,6 +20,9 @@
     - apt: update_cache=yes
 
     - user: name={{toptour_deploy_user}} groups=docker,web
+
+    - authorized_key: user={{toptour_deploy_user}} key="{{ lookup('file', '{{travis_ci_pub_deploy_key}}') }}"
+
 
     - lineinfile:
         regexp: 'export GOOGLE_CLIENT_ID='

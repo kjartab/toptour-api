@@ -1,7 +1,7 @@
 sudo: required
 dist: trusty
 addons:
-  ssh_known_hosts: trd.toptour.no
+  ssh_known_hosts: api.toptour.no
 cache:
   directories:
   - node_modules
@@ -26,7 +26,7 @@ deploy:
 
   - provider: script
     skip_cleanup: true
-    script: rsync -rav --no-perms --delete-after --quiet $TRAVIS_BUILD_DIR/ --include=docker-compose* --include=deploy.sh toptour@trd.toptour.no:/home/toptour/toptour/
+    script: rsync -rav --no-perms --delete-after --quiet $TRAVIS_BUILD_DIR/ --include=docker-compose* --include=deploy.sh toptour@api.toptour.no:/home/toptour/toptour/
     on:
       branch: v2
 
