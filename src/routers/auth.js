@@ -4,7 +4,7 @@ var GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
 var router = express.Router()
 
 if (process.env.API_BASE_NAME) {
-  baseUrl = "https://" + process.env.API_BASE_NAME
+  baseUrl = "http://" + process.env.API_BASE_NAME
 } else {
   baseUrl = "http://localhost:3010";
 }
@@ -13,7 +13,7 @@ var loginUrl = baseUrl + '/auth/login';
 
 var db = require('../storage/db')
 
-console.log("process env", process.env);
+// console.log("process env", process.env);
 var GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 var GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 
@@ -22,7 +22,7 @@ async function findOrCreate(userData, callback) {
   try {
       user = await db.getUserBySocialData(userData);
   } catch(err) {
-    console.log(err);
+    console.log("err");
   }
 
   if (user) {
@@ -50,10 +50,10 @@ passport.use(new GoogleStrategy({
     passReqToCallback   : true
   },
   function(request, accessToken, refreshToken, profile, done) {
-    console.log(profile);
-    console.log(accessToken);
-    console.log(refreshToken);
-    console.log(done);
+    // console.log(profile);
+    // console.log(accessToken);
+    // console.log(refreshToken);
+    // console.log(done);
     done(null, profile);
     // findOrCreate({ googleId: profile.id }, function (err, user) {
     //   return done(err, user);
@@ -63,12 +63,12 @@ passport.use(new GoogleStrategy({
 
 router.get('/', (req, res) => {
 
-  console.log(process.env)
+  // console.log(process.env)
   res.send("auth");
 });
 
 router.get('/login', (req, res) => {
-  console.log(baseUrl);
+  // console.log(baseUrl);
     res.redirect('/auth/google')
     // res.send("<a href='" + baseUrl + "/auth/google'>Login google</a>");
 })
@@ -83,9 +83,8 @@ router.get('/google',
 router.get('/google/callback',
   passport.authenticate('google', { failureRedirect: '/auth/login' }),
   function(req, res) {
-
-    // Successful authentication, redirect home.
-    res.redirect('/');
+    res.cookie('toptourLoggedIn', req.user.id);
+    res.redirect('http://localhost:8080');
   });
 
 router.get('/google/logout', (req, res) => {
@@ -96,10 +95,10 @@ router.get('/google/logout', (req, res) => {
 router.get('*', (req, res) => {
     res.sendStatus(404);
 });
-
+  
 function isAuthenticated(req, res, next) {
     if (!req.user) {
-        res.send(401, { 'url' : baseUrl + '/auth/login'})
+        res.status(401).send({ 'url' : baseUrl + '/auth/login'})
         // res.redirect('/auth/login');
     } else {
         // console.log(req.user.isAuthenticated(), "is auth");

@@ -20,8 +20,8 @@ services:
       - ELASTIC_PASSWORD=$ELASTIC_PASSWORD
       - API_BASE_NAME=$API_BASE_NAME
       - COOKIE_DOMAIN=$COOKIE_DOMAIN
-    depends_on:
-      - elasticsearch
+    # depends_on:
+    #   - elasticsearch
 
 networks:
   esnet:

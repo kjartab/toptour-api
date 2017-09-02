@@ -4,19 +4,21 @@ var db = require('../storage/db')
 var tourRouter;
 
 router.get('/me', function (req, res) {
-    return res.send(req.user);    
+    console.log("sending back")
+    console.log(req.user.displayName)
+    return res.status(200).send(req.user);
 })
 
-router.get('/{id}', function (req, res) {
+// router.get('/{id}', function (req, res) {
 
 
-    if (req.user) {
+//     if (req.user) {
 
-    }
+//     }
 
-    db.getUser()
-    res.send(req.user)
-})
+//     db.getUser()
+//     res.send(req.user)
+// })
 
 
 // router.use('/{id}/tours', tourRouter);

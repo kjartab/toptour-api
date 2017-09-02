@@ -12,7 +12,6 @@ class ToptourDatabase {
     async getUserBySocialData(userData) {
         let provider = userData.provider;
         let userId = userData.userId;
-
         
     }
 

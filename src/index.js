@@ -1,6 +1,20 @@
 var express = require('express')
 
 var app = express()
+// app.use(cors())
+app.use(function(req, res, next) {
+  var allowedOrigins = ['http://localhost:8080', 'http://localhost:3010'];
+  var origin = req.headers.origin;
+  if(allowedOrigins.indexOf(origin) > -1){
+       res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  //res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:8020');
+  res.header('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.header('Access-Control-Allow-Credentials', true);
+  return next();
+});
+
 var version = process.env.TOPTOUR_API_VERSION;
 app.use(require('body-parser').urlencoded({ extended: true }));
 app.use(require('cookie-parser')());
@@ -11,9 +25,9 @@ app.use(require('express-session')(
         saveUninitialized: false,
         cookie  : {
           expires: false,
-          domain: process.env.COOKIE_DOMAIN
+          // domain: process.env.COOKIE_DOMAIN,
+          domain: "localhost"
         }
-
     })
 );
 
