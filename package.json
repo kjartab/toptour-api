@@ -19,7 +19,7 @@
     "eslint": "^3.19.0"
   },
   "scripts": {
-    "start": "npm src/index.js",
+    "start": "node src/index.js",
     "dev": "nodemon src/index.js"
   },
   "author": "",
