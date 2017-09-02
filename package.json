@@ -20,7 +20,7 @@
   },
   "scripts": {
     "start": "node src/index.js",
-    "dev": "nodemon src/index.js"
+    "dev": "source envs.sh && nodemon src/index.js"
   },
   "author": "",
   "license": "ISC"

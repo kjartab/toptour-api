@@ -4,7 +4,7 @@ var GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
 var router = express.Router()
 
 if (process.env.API_BASE_NAME) {
-  baseUrl = "http://" + process.env.API_BASE_NAME
+  baseUrl = "https://" + process.env.API_BASE_NAME
 } else {
   baseUrl = "http://localhost:3010";
 }
