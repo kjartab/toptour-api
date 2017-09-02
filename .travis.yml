@@ -12,7 +12,7 @@ install: true
 
 after_success:
 - docker build -t "kjartanb/toptour-api" ./
-- if [ "$TRAVIS_BRANCH" == "master" ]; then docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+- if [ "$TRAVIS_BRANCH" == "v2" ]; then docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
   docker push "kjartanb/toptour-api"; fi
 
 before_deploy:
@@ -28,12 +28,12 @@ deploy:
     skip_cleanup: true
     script: rsync -rav --no-perms --delete-after --quiet $TRAVIS_BUILD_DIR/ --include=docker-compose* --include=deploy.sh toptour@trd.toptour.no:/home/toptour/toptour/
     on:
-      branch: master
+      branch: v2
 
   - provider: script
     script: ssh toptour@api.toptour.no "source ~/.bash_profile; cd toptour; chmod +x deploy.sh; ./deploy.sh"
     on:
-      branch: master
+      branch: v2
 
 env:
   global:
