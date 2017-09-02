@@ -19,7 +19,8 @@
     "eslint": "^3.19.0"
   },
   "scripts": {
-    "start": "nodemon src/index.js"
+    "start": "npm src/index.js",
+    "dev": "nodemon src/index.js"
   },
   "author": "",
   "license": "ISC"
